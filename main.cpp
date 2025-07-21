@@ -1,85 +1,85 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
-#include <locale>     // äëÿ setlocale
+#include <locale> // для setlocale
 
 using namespace std;
-int main() {
-    setlocale(LC_ALL, "Russian");
 
-// Ñòðóêòóðà äëÿ õðàíåíèÿ äàííûõ î êëèåíòå
+// Структура пользователя
 struct User {
     string password;
     double balance;
 };
 
-// Ãëîáàëüíîå õðàíèëèùå ïîëüçîâàòåëåé
+// Хранилище пользователей
 unordered_map<string, User> users;
 
-// Ôóíêöèÿ ðåãèñòðàöèè
+// Регистрация нового пользователя
 void registerUser() {
     string username, password;
-    cout << "Ïðèäóìàéòå ëîãèí: ";
+    cout << "Введите имя пользователя: ";
     cin >> username;
 
     if (users.find(username) != users.end()) {
-        cout << "Ïîëüçîâàòåëü ñ òàêèì ëîãèíîì óæå ñóùåñòâóåò.\n";
+        cout << "Пользователь с таким именем уже существует.\n";
         return;
     }
 
-    cout << "Ïðèäóìàéòå ïàðîëü: ";
+    cout << "Введите пароль: ";
     cin >> password;
 
-    users[username] = { password, 0.0 };
-    cout << "Ðåãèñòðàöèÿ ïðîøëà óñïåøíî!\n";
+    User newUser;
+    newUser.password = password;
+    newUser.balance = 0.0;
+    users[username] = newUser;
+
+    cout << "Пользователь успешно зарегистрирован!\n";
 }
 
-// Ôóíêöèÿ âõîäà
-void loginUser() {
+// Авторизация пользователя
+int loginUser() {
     string username, password;
-    cout << "Ëîãèí: ";
+    cout << "Введите имя пользователя: ";
     cin >> username;
-    cout << "Ïàðîëü: ";
+    cout << "Введите пароль: ";
     cin >> password;
 
     if (users.find(username) != users.end() && users[username].password == password) {
-        cout << "Âû âîøëè â àêêàóíò " << username << "!\n";
-        cout << "Âàø áàëàíñ: $" << users[username].balance << "\n";
-    }
-    else {
-        cout << "Íåâåðíûé ëîãèí èëè ïàðîëü.\n";
+        cout << "Вход выполнен успешно!\n";
+        return 1; // или можно возвращать индекс, если список
+    } else {
+        cout << "Неверное имя пользователя или пароль.\n";
+        return -1;
     }
 }
 
 int main() {
-    setlocale(LC_ALL, "Russian"); // Óñòàíàâëèâàåì ðóññêóþ ëîêàëü
+    // Включение русского языка в консоли
+    setlocale(LC_ALL, "Russian");
 
     int choice;
-
     while (true) {
-        cout << "\n--- Ìèíè-Áàíê ---\n";
-        cout << "1. Çàðåãèñòðèðîâàòüñÿ\n";
-        cout << "2. Âîéòè\n";
-        cout << "3. Âûõîä\n";
-        cout << "Âàø âûáîð: ";
+        cout << "\n--- Главное меню ---\n";
+        cout << "1. Регистрация\n";
+        cout << "2. Вход\n";
+        cout << "3. Выход\n";
+        cout << "Выберите действие: ";
         cin >> choice;
 
-        if (choice == 1) {
-            registerUser();
-        }
-        else if (choice == 2) {
-            loginUser();
-        }
-        else if (choice == 3) {
-            cout << "Âûõîä èç ïðîãðàììû.\n";
-            break;
-        }
-        else {
-            cout << "Íåâåðíûé âûáîð. Ïîâòîðèòå.\n";
+        switch (choice) {
+            case 1:
+                registerUser();
+                break;
+            case 2:
+                loginUser();
+                break;
+            case 3:
+                cout << "Выход из программы...\n";
+                return 0;
+            default:
+                cout << "Неверный выбор. Повторите попытку.\n";
         }
     }
-
-    return 0;
 }
 
 
