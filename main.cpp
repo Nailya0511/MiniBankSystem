@@ -1,65 +1,67 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
-#include <locale>     // для setlocale
+#include <locale>     // Г¤Г«Гї setlocale
 
 using namespace std;
+int main() {
+    setlocale(LC_ALL, "Russian");
 
-// Структура для хранения данных о клиенте
+// Г‘ГІГ°ГіГЄГІГіГ°Г  Г¤Г«Гї ГµГ°Г Г­ГҐГ­ГЁГї Г¤Г Г­Г­Г»Гµ Г® ГЄГ«ГЁГҐГ­ГІГҐ
 struct User {
     string password;
     double balance;
 };
 
-// Глобальное хранилище пользователей
+// ГѓГ«Г®ГЎГ Г«ГјГ­Г®ГҐ ГµГ°Г Г­ГЁГ«ГЁГ№ГҐ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«ГҐГ©
 unordered_map<string, User> users;
 
-// Функция регистрации
+// Г”ГіГ­ГЄГ¶ГЁГї Г°ГҐГЈГЁГ±ГІГ°Г Г¶ГЁГЁ
 void registerUser() {
     string username, password;
-    cout << "Придумайте логин: ";
+    cout << "ГЏГ°ГЁГ¤ГіГ¬Г Г©ГІГҐ Г«Г®ГЈГЁГ­: ";
     cin >> username;
 
     if (users.find(username) != users.end()) {
-        cout << "Пользователь с таким логином уже существует.\n";
+        cout << "ГЏГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гј Г± ГІГ ГЄГЁГ¬ Г«Г®ГЈГЁГ­Г®Г¬ ГіГ¦ГҐ Г±ГіГ№ГҐГ±ГІГўГіГҐГІ.\n";
         return;
     }
 
-    cout << "Придумайте пароль: ";
+    cout << "ГЏГ°ГЁГ¤ГіГ¬Г Г©ГІГҐ ГЇГ Г°Г®Г«Гј: ";
     cin >> password;
 
     users[username] = { password, 0.0 };
-    cout << "Регистрация прошла успешно!\n";
+    cout << "ГђГҐГЈГЁГ±ГІГ°Г Г¶ГЁГї ГЇГ°Г®ГёГ«Г  ГіГ±ГЇГҐГёГ­Г®!\n";
 }
 
-// Функция входа
+// Г”ГіГ­ГЄГ¶ГЁГї ГўГµГ®Г¤Г 
 void loginUser() {
     string username, password;
-    cout << "Логин: ";
+    cout << "Г‹Г®ГЈГЁГ­: ";
     cin >> username;
-    cout << "Пароль: ";
+    cout << "ГЏГ Г°Г®Г«Гј: ";
     cin >> password;
 
     if (users.find(username) != users.end() && users[username].password == password) {
-        cout << "Вы вошли в аккаунт " << username << "!\n";
-        cout << "Ваш баланс: $" << users[username].balance << "\n";
+        cout << "Г‚Г» ГўГ®ГёГ«ГЁ Гў Г ГЄГЄГ ГіГ­ГІ " << username << "!\n";
+        cout << "Г‚Г Гё ГЎГ Г«Г Г­Г±: $" << users[username].balance << "\n";
     }
     else {
-        cout << "Неверный логин или пароль.\n";
+        cout << "ГЌГҐГўГҐГ°Г­Г»Г© Г«Г®ГЈГЁГ­ ГЁГ«ГЁ ГЇГ Г°Г®Г«Гј.\n";
     }
 }
 
 int main() {
-    setlocale(LC_ALL, "Russian"); // Устанавливаем русскую локаль
+    setlocale(LC_ALL, "Russian"); // Г“Г±ГІГ Г­Г ГўГ«ГЁГўГ ГҐГ¬ Г°ГіГ±Г±ГЄГіГѕ Г«Г®ГЄГ Г«Гј
 
     int choice;
 
     while (true) {
-        cout << "\n--- Мини-Банк ---\n";
-        cout << "1. Зарегистрироваться\n";
-        cout << "2. Войти\n";
-        cout << "3. Выход\n";
-        cout << "Ваш выбор: ";
+        cout << "\n--- ГЊГЁГ­ГЁ-ГЃГ Г­ГЄ ---\n";
+        cout << "1. Г‡Г Г°ГҐГЈГЁГ±ГІГ°ГЁГ°Г®ГўГ ГІГјГ±Гї\n";
+        cout << "2. Г‚Г®Г©ГІГЁ\n";
+        cout << "3. Г‚Г»ГµГ®Г¤\n";
+        cout << "Г‚Г Гё ГўГ»ГЎГ®Г°: ";
         cin >> choice;
 
         if (choice == 1) {
@@ -69,11 +71,11 @@ int main() {
             loginUser();
         }
         else if (choice == 3) {
-            cout << "Выход из программы.\n";
+            cout << "Г‚Г»ГµГ®Г¤ ГЁГ§ ГЇГ°Г®ГЈГ°Г Г¬Г¬Г».\n";
             break;
         }
         else {
-            cout << "Неверный выбор. Повторите.\n";
+            cout << "ГЌГҐГўГҐГ°Г­Г»Г© ГўГ»ГЎГ®Г°. ГЏГ®ГўГІГ®Г°ГЁГІГҐ.\n";
         }
     }
 
